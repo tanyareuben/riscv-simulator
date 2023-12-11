@@ -1,50 +1,94 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class Memory {
-    private HashMap<Integer, Byte> memory;
+    private final int startAddress;
+    private final int size;
+    private Map<Integer, Integer> data;
 
-    public Memory() {
-        this.memory = new HashMap<>();
+    public Memory(int startAddress, int size) {
+        this.startAddress = startAddress;
+        this.size = size;
+        this.data = new HashMap<>();
+
+        initializeMemory();
     }
 
-    public void loadInstructions(int[] instructions) {
-        for (int i = 0; i < instructions.length; i++) {
-            writeWord(i * 4, instructions[i]);
+    public int getStartAddress() {
+        return startAddress;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    private void initializeMemory() {
+        for (int i = startAddress; i < startAddress + size; i += 4) {
+            data.put(i, 0);  // Assuming the initial value at each address is 0
         }
     }
 
-    public byte readByte(int address) {
-        validateAddress(address);
-        return memory.getOrDefault(address, (byte) 0);
+    public void checkAddressValidity(int address) {
+        if (address < startAddress || address >= startAddress + size || address % 4 != 0) {
+            throw new IllegalArgumentException("Invalid memory address: " + address);
+        }
+    }
+
+    public int readByte(int address) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        return (word >> offset) & 0xFF;
+    }
+
+    public int readHalfword(int address) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        return (word >> offset) & 0xFFFF;
+    }
+
+    public int readShort(int address) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        return (short) ((word >> offset) & 0xFFFF);
     }
 
     public int readWord(int address) {
-        validateAddress(address);
-        int word = 0;
-
-        for (int i = 0; i < 4; i++) {
-            word |= (readByte(address + i) & 0xFF) << (i * 8);
-        }
-
-        return word;
+        checkAddressValidity(address);
+        return data.getOrDefault(address, 0);
     }
 
-    public void writeByte(int address, byte value) {
-        validateAddress(address);
-        memory.put(address, value);
+    public void writeByte(int address, int value) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        word &= ~(0xFF << offset);
+        word |= (value & 0xFF) << offset;
+        writeWord(address & 0xFFFFFFFC, word);
+    }
+
+    public void writeHalfword(int address, int value) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        word &= ~(0xFFFF << offset);
+        word |= (value & 0xFFFF) << offset;
+        writeWord(address & 0xFFFFFFFC, word);
+    }
+
+    public void writeShort(int address, int value) {
+        checkAddressValidity(address);
+        int word = readWord(address & 0xFFFFFFFC);
+        int offset = (address % 4) * 8;
+        word &= ~(0xFFFF << offset);
+        word |= (value & 0xFFFF) << offset;
+        writeWord(address & 0xFFFFFFFC, word);
     }
 
     public void writeWord(int address, int value) {
-        validateAddress(address);
-
-        for (int i = 0; i < 4; i++) {
-            writeByte(address + i, (byte) (value >> (i * 8)));
-        }
-    }
-
-    private void validateAddress(int address) {
-        if (address < 0) {
-            throw new IllegalArgumentException("Invalid memory address: " + address);
-        }
+        checkAddressValidity(address);
+        data.put(address, value);
     }
 }
