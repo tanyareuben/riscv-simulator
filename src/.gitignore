@@ -7,3 +7,11 @@
 /RISCVSimulator.class
 /RegisterFiles.class
 /SimulationLoop.class
+/ITypeInstruction.class
+/Instruction.class
+/InstructionFactory.class
+/JTypeInstruction.class
+/RTypeInstruction.class
+/Registers.class
+/STypeInstruction.class
+/UTypeInstruction.class

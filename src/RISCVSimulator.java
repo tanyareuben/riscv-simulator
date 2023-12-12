@@ -166,17 +166,26 @@ public class RISCVSimulator {
     }
 
     private void getProgramPathAndLoadProgram() {
-        System.out.print("Enter the path to the RISC-V program file: ");
-        String filePath = scanner.nextLine().trim();
+        boolean bLoaded = false;
+        while(!bLoaded) {
+            System.out.print("Enter the path to the RISC-V program file: ");
+            String filePath = scanner.nextLine().trim();
 
-        File file = new File(filePath);
+            if(filePath.compareToIgnoreCase("quit") == 0) {
+                System.out.println("Quitting ...");
+                System.exit(0);
+            }
 
-        if (file.exists() && file.isFile()) {
-            // Load the program if the file is valid
-            loadProgram(filePath);
-            System.out.println("Program loaded successfully.");
-        } else {
-            System.out.println("Invalid file path. Please try again.");
+            File file = new File(filePath);
+
+            if (file.exists() && file.isFile()) {
+                // Load the program if the file is valid
+                loadProgram(filePath);
+                bLoaded = true;
+                System.out.println("Program loaded successfully.");
+            } else {
+                System.out.println("Invalid file path. Please try again Or type 'quit' to end program");
+            }
         }
     }
 
