@@ -18,10 +18,12 @@ public class RTypeInstruction extends Instruction {
     @Override
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
-            case InstructionSet.ADD:
-                // Actual logic for ADD operation
-                // Example: register[rd] = register[rs1] + register[rs2];
-                break;
+	        case InstructionSet.ADD:
+		        int resultADD = registers.getRegister(rs1) + registers.getRegister(rs2);
+		        registers.writeToRegister(rd, resultADD);
+		        break;
+		        
+	        
 //	TODO
 //            case InstructionSet.SUB:
 //                // Actual logic for SUB operation

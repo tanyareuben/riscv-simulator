@@ -14,15 +14,15 @@ public class UTypeInstruction extends Instruction {
     @Override
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
-            case InstructionSet.LUI:
-                // Actual logic for LUI operation
-                // Example: register[rd] = immediate;
-                break;
+	        case InstructionSet.LUI: // Load Upper Immediate
+	            int luiRes = immediate << 12; // Shift immediate value left by 12 bits
+	            registers.writeToRegister(rd, luiRes); // Write the result to the specified destination register
+	            break;
 
-            case InstructionSet.AUIPC:
-                // Actual logic for AUIPC operation
-                // Example: register[rd] = pc + immediate;
-                break;
+	        case InstructionSet.AUIPC: // Add Upper Immediate to PC
+	            int auipcRes = programCounter + (immediate << 12); // Add immediate value shifted left by 12 bits to the program counter
+	            registers.writeToRegister(rd, auipcRes); // Write the result to the specified destination register
+	            break;
 
             // Add cases for other U-Type instructions as needed
 

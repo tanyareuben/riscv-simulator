@@ -17,10 +17,25 @@ public class STypeInstruction extends Instruction {
     @Override
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
-            case InstructionSet.SW:
-                // Actual logic for SW operation
-                // Example: memory[rs1 + immediate] = register[rs2];
+	        case InstructionSet.SW: // Store word
+	            int swAddress = registers.getRegister(rs1) + immediate; 
+	            int swValue = registers.getRegister(rs2); 
+	            dataMemory.writeWord(swAddress, swValue); 
+	            break;
+                
+            case InstructionSet.SB: // Store byte
+                int sbAddress = registers.getRegister(rs1) + immediate; 
+                byte sbValue = (byte) (registers.getRegister(rs2) & 0xFF); 
+                dataMemory.writeByte(sbAddress, sbValue); 
                 break;
+                
+            case InstructionSet.SH: // Store halfword
+                int shAddress = registers.getRegister(rs1) + immediate; 
+                short shValue = (short) (registers.getRegister(rs2) & 0xFFFF); 
+                dataMemory.writeHalfword(shAddress, shValue);
+                break;
+                
+            
 
             // Add cases for other S-Type instructions as needed
 
