@@ -16,35 +16,35 @@ public class ITypeInstruction extends Instruction {
     @Override
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
-	        case InstructionSet.LB: // Load byte  
-	            int lbAddress = registers.getRegister(rs1) + immediate; 
-	            byte lbValue = (byte) dataMemory.readByte(lbAddress); // Casting value as a byte 
-	            registers.writeToRegister(rd, lbValue);
-	            break;
+		    case InstructionSet.LB: // Load byte  
+		        int lbAddress = registers.getRegister(rs1) + immediate; 
+		        byte lbValue = (byte) dataMemory.readByte(lbAddress); // Casting value as a byte 
+		        registers.writeToRegister(rd, lbValue);
+		        break;
 
-	        case InstructionSet.LH: // LH: Load halfword 
-	            int lhAddress = registers.getRegister(rs1) + immediate; 
-	            short lhValue = (short) dataMemory.readShort(lhAddress); // Casting value as a short 
-	            registers.writeToRegister(rd, lhValue);
-	            break;
+		    case InstructionSet.LH: // LH: Load halfword 
+		        int lhAddress = registers.getRegister(rs1) + immediate; 
+		        short lhValue = (short) dataMemory.readShort(lhAddress); // Casting value as a short 
+		        registers.writeToRegister(rd, lhValue);
+		        break;
 	            
-	        case InstructionSet.LW: // LW: Load word  
-	            int lwAddress = registers.getRegister(rs1) + immediate; 
-	            int lwValue = dataMemory.readWord(lwAddress); 
-	            registers.writeToRegister(rd, lwValue);
-	            break;
+		    case InstructionSet.LW: // LW: Load word  
+		        int lwAddress = registers.getRegister(rs1) + immediate; 
+		        int lwValue = dataMemory.readWord(lwAddress); 
+		        registers.writeToRegister(rd, lwValue);
+		        break;
 	            
-	        case InstructionSet.LBU: // LBU: Load byte unsigned
-	            int lbuAddress = registers.getRegister(rs1) + immediate; 
-	            short lbuValue = (short) (dataMemory.readByte(lbuAddress) & 0xFF); 
-	            registers.writeToRegister(rd, lbuValue); 
-	            break;
+		    case InstructionSet.LBU: // LBU: Load byte unsigned
+		        int lbuAddress = registers.getRegister(rs1) + immediate; 
+		        short lbuValue = (short) (dataMemory.readByte(lbuAddress) & 0xFF); 
+		        registers.writeToRegister(rd, lbuValue); 
+		        break;
 	            
-	        case InstructionSet.LHU: // LHU: Load halfword unsigned
-	            int lhuAddress = registers.getRegister(rs1) + immediate; 
-	            int lhuValue = dataMemory.readHalfword(lhuAddress) & 0xFFFF; 
-	            registers.writeToRegister(rd, lhuValue);
-	            break;
+		    case InstructionSet.LHU: // LHU: Load halfword unsigned
+		        int lhuAddress = registers.getRegister(rs1) + immediate; 
+		        int lhuValue = dataMemory.readHalfword(lhuAddress) & 0xFFFF; 
+		        registers.writeToRegister(rd, lhuValue);
+		        break;
                 
             case InstructionSet.JALR: // Jump and Link Register
                 int jalrRes = programCounter + 4; // Store the address of the next instruction
