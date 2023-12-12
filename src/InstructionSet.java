@@ -78,10 +78,25 @@ public class InstructionSet {
         addMapping(SW, "SW");
 
         addMapping(ADDI, "ADDI");
-        // add the rest here
+        addMapping(SLTI, "SLTI");
+        addMapping(SLTIU,"SLTIU");
+        addMapping(XORI,"XORI");
+        addMapping(ORI,"ORI");
+        addMapping(ANDI,"ANDI");
         
-        addMapping(ADD, "ADD");
-        addMapping(SUB, "SUB");
+        addMapping(SLLI,"SLLI");
+        addMapping(SRLI,"SRLI");
+        addMapping(SRAI,"SRAI");
+        addMapping(ADD,"ADD");
+        addMapping(SUB,"SUB");
+        addMapping(SLL,"SLL");
+        addMapping(SLT,"SLT");
+        addMapping(SLTU,"SLTU");
+        addMapping(XOR,"XOR");
+        addMapping(SRL,"SRL");
+        addMapping(SRA,"SRA");
+        addMapping(OR,"OR");
+        addMapping(AND,"AND");
     }
 
 	private static void addMapping(int opcode, String mnemonic) {
