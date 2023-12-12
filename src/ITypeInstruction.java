@@ -14,7 +14,7 @@ public class ITypeInstruction extends Instruction {
     }
 
     @Override
-    public void execute(Memory dataMemory, Registers registers) {
+    public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
             case InstructionSet.LB:
                 // Actual logic for LB operation

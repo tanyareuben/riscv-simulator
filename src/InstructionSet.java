@@ -32,10 +32,26 @@ public class InstructionSet {
 	public static final int SW = 0x23 | (0x2 << 12);  //funct3 = 2
 
 	public static final int ADDI = 0x13;
+	public static final int SLTI = 0x13;
+	public static final int SLTIU = 0x13;
+	public static final int XORI = 0x13;
+	public static final int ORI = 0x13;
+	public static final int ANDI = 0x13;
+	
+	public static final int SLLI = 0x13;
+	public static final int SRLI = 0x13;
+	public static final int SRAI = 0x13;
 	public static final int ADD = 0x33;
-    public static final int SUB = 0x40000033;
-
-
+	public static final int SUB = 0x33; //I changed this one
+	public static final int SLL = 0x33;
+	public static final int SLT = 0x33;
+	public static final int SLTU = 0x33;
+	public static final int XOR = 0x33;
+	public static final int SRL = 0x33;
+	public static final int SRA = 0x33;
+	public static final int OR = 0x33;
+	public static final int AND = 0x33;
+	
 
 	static {
         // Initialize opcodeToMnemonicMap and mnemonicToOpcodeMap with R-type instructions
@@ -62,6 +78,8 @@ public class InstructionSet {
         addMapping(SW, "SW");
 
         addMapping(ADDI, "ADDI");
+        // add the rest here
+        
         addMapping(ADD, "ADD");
         addMapping(SUB, "SUB");
     }

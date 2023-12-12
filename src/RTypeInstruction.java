@@ -16,7 +16,7 @@ public class RTypeInstruction extends Instruction {
     }
 
     @Override
-    public void execute(Memory dataMemory, Registers registers) {
+    public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
             case InstructionSet.ADD:
                 // Actual logic for ADD operation

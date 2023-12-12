@@ -15,7 +15,7 @@ public class STypeInstruction extends Instruction {
     }
 
     @Override
-    public void execute(Memory dataMemory, Registers registers) {
+    public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
             case InstructionSet.SW:
                 // Actual logic for SW operation

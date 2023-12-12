@@ -12,7 +12,7 @@ public class UTypeInstruction extends Instruction {
     }
 
     @Override
-    public void execute(Memory dataMemory, Registers registers) {
+    public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
             case InstructionSet.LUI:
                 // Actual logic for LUI operation

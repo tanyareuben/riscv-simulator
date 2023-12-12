@@ -85,7 +85,7 @@ public class Program {
         System.out.println(assemblyString); //TODO remove after debugging
         logAssembly(assemblyString);
 
-        parsedInstruction.execute(dataMemory, registers);
+        parsedInstruction.execute(dataMemory, registers, programCounter);
         programCounter += 4; // Increment program counter after successful execution
     }
 

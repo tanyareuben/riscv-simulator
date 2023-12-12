@@ -10,12 +10,12 @@ public class JTypeInstruction extends Instruction {
     }
 
     @Override
-    public void execute(Memory dataMemory, Registers registers) {
+    public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
             case InstructionSet.JAL:
-                // Actual logic for JAL operation
-                // Example: register[rd] = pc + 4; pc += immediate;
-                break;
+            	int jalRes = programCounter + 4; 
+            	programCounter += immediate; 
+				break; 
 
             // Add cases for other J-Type instructions as needed
 
