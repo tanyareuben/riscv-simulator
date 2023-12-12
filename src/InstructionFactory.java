@@ -33,7 +33,8 @@ public class InstructionFactory {
                 return createSTypeInstruction(binaryInstruction);
 
             case InstructionSet.ADD:
-            case InstructionSet.SUB:
+//            FIXME
+//            case InstructionSet.SUB:
                 return createRTypeInstruction(binaryInstruction);
 
             default:

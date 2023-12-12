@@ -22,11 +22,11 @@ public class RTypeInstruction extends Instruction {
                 // Actual logic for ADD operation
                 // Example: register[rd] = register[rs1] + register[rs2];
                 break;
-
-            case InstructionSet.SUB:
-                // Actual logic for SUB operation
-                // Example: register[rd] = register[rs1] - register[rs2];
-                break;
+//	TODO
+//            case InstructionSet.SUB:
+//                // Actual logic for SUB operation
+//                // Example: register[rd] = register[rs1] - register[rs2];
+//                break;
 
             // Add cases for other R-Type instructions as needed
 
