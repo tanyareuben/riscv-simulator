@@ -12,7 +12,7 @@ public class SimulationLoop {
 	
 	public void runNextInstruction() {
 		//fetch instructions from memory
-		int instruction = memory.read(pc);
+		int instruction = memory.readWord(pc);
 			
 		//decode instruction
 		int opcode = (instruction >> 0) & 0x7F; // Extract opcode

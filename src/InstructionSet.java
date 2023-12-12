@@ -1,5 +1,13 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public class InstructionSet {
+
+
+	private static final Map<Integer, String> opcodeToMnemonicMap = new HashMap<>();
+    private static final Map<String, Integer> mnemonicToOpcodeMap = new HashMap<>();
+
+	
 
 	public static final int LUI = 0x37; 
 	public static final int AUIPC = 0x17; 
@@ -27,4 +35,47 @@ public class InstructionSet {
 	public static final int ADD = 0x33;
     public static final int SUB = 0x40000033;
 
+
+
+	static {
+        // Initialize opcodeToMnemonicMap and mnemonicToOpcodeMap with R-type instructions
+        addMapping(LUI, "LUI");
+        addMapping(AUIPC, "AUIPC");
+        addMapping(JAL, "JAL");
+        addMapping(JALR, "JALR");
+
+        addMapping(BEQ, "BEQ");
+        addMapping(BNE, "BNE");
+        addMapping(BLT, "BLT");
+        addMapping(BGE, "BGE");
+        addMapping(BLTU, "BLTU");
+        addMapping(BGEU, "BGEU");
+
+        addMapping(LB, "LB");
+        addMapping(LH, "LH");
+        addMapping(LW, "LW");
+        addMapping(LBU, "LBU");
+        addMapping(LHU, "LHU");
+
+        addMapping(SB, "SB");
+        addMapping(SH, "SH");
+        addMapping(SW, "SW");
+
+        addMapping(ADDI, "ADDI");
+        addMapping(ADD, "ADD");
+        addMapping(SUB, "SUB");
+    }
+
+	private static void addMapping(int opcode, String mnemonic) {
+        opcodeToMnemonicMap.put(opcode, mnemonic);
+        mnemonicToOpcodeMap.put(mnemonic, opcode);
+    }
+
+    public static String getMnemonic(int opcode) {
+        return opcodeToMnemonicMap.get(opcode);
+    }
+
+    public static Integer getOpcode(String mnemonic) {
+        return mnemonicToOpcodeMap.get(mnemonic);
+    }
 }

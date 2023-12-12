@@ -3,14 +3,13 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ProgramMemory extends Memory {
-    private int programCounter;
+
 
     public ProgramMemory(int startAddress, int size) {
         super(startAddress, size);
-        this.programCounter = startAddress;
     }
 
-    public int getNextInstruction() {
+    public int getNextInstruction(int programCounter) {
         checkAddressValidity(programCounter);
         int instruction = readWord(programCounter);
         programCounter += 4;
@@ -22,10 +21,6 @@ public class ProgramMemory extends Memory {
         return readWord(address);
     }
 
-    public void setProgramCounter(int address) {
-        checkAddressValidity(address);
-        this.programCounter = address;
-    }
     public void loadInstructionsFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -38,6 +33,20 @@ public class ProgramMemory extends Memory {
             System.out.println("Program loading complete.");
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error loading program: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public int getEndAddress() {
+        return getStartAddress() + getSize() - 1;
+    }
+
+    public void printMemory() {
+        int currentAddress = getStartAddress();
+        while (currentAddress < getEndAddress()) {
+            int instruction = readWord(currentAddress);
+            System.out.printf("0x%08X : 0x%08X\n", currentAddress, instruction);
+            currentAddress += 4;
         }
     }
 }

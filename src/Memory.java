@@ -91,4 +91,17 @@ public class Memory {
         checkAddressValidity(address);
         data.put(address, value);
     }
+
+    public int getEndAddress() {
+        return getStartAddress() + getSize() - 1;
+    }
+
+    public void printMemory() {
+        int currentAddress = getStartAddress();
+        while (currentAddress < getEndAddress()) {
+            int data = readWord(currentAddress);
+            System.out.printf("0x%08X : 0x%08X\n", currentAddress, data);
+            currentAddress += 4;
+        }
+    }
 }
