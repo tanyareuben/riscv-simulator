@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class ProgramMemory extends Memory {
 
-
     public ProgramMemory(int startAddress, int size) {
         super(startAddress, size);
     }
@@ -27,10 +26,10 @@ public class ProgramMemory extends Memory {
             int address = getStartAddress();
 
             while ((line = reader.readLine()) != null) {
-                for (int i = line.length() - 2; i >= 0; i -= 2) {
+                for (int i = 0; i < line.length(); i += 2) {
                     String byteHex = line.substring(i, i + 2);
                     int instructionByte = Integer.parseInt(byteHex, 16);
-                    writeByte(address, (byte) instructionByte); // Convert to byte
+                    writeByte(address, instructionByte);
                     address++;
                 }
             }
@@ -40,7 +39,6 @@ public class ProgramMemory extends Memory {
             System.err.println("Error loading program: " + e.getMessage());
         }
     }
-
 
     @Override
     public int getEndAddress() {
