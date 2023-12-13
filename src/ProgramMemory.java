@@ -57,6 +57,9 @@ public class ProgramMemory extends Memory {
             int word = readWord(currentAddress);
             System.out.printf("0x%08X :\n", currentAddress);
 
+            String binaryInstruction = String.format("%32s", Integer.toBinaryString(word)).replace(' ', '0');
+            System.out.println("Binary Instruction: " + binaryInstruction);
+            
             for (int i = 3; i >= 0; i--) {
                 int byteValue = (word >> (i * 8)) & 0xFF;
                 String binaryString = String.format("%8s", Integer.toBinaryString(byteValue)).replace(' ', '0');

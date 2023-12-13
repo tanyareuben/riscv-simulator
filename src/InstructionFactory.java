@@ -12,19 +12,7 @@ public class InstructionFactory {
 		
         String binaryString = String.format("%32s", Integer.toBinaryString(binaryInstruction)).replace(' ', '0');
 
-        int opcodex = Integer.parseInt(binaryString.substring(0, 7), 2);
-        int rdx = Integer.parseInt(binaryString.substring(7, 12), 2);
-        int funct3x = Integer.parseInt(binaryString.substring(12, 15), 2);
-        int rs1x = Integer.parseInt(binaryString.substring(15, 20), 2);
-        int rs2x = Integer.parseInt(binaryString.substring(20, 25), 2);
-        int funct7x = Integer.parseInt(binaryString.substring(25, 32), 2);
-
-        // Calculate the immediate value with sign extension
-        String immStr = binaryString.substring(20);
-        int immx = Integer.parseInt(immStr, 2);
-        if ((immx & 0x800) != 0) {
-            immx |= 0xFFFFF000;
-        }
+        parseAndPrintInstruction(binaryInstruction);
         
         switch (opcode) {
             case InstructionSet.LUI:
@@ -131,4 +119,38 @@ public class InstructionFactory {
 
         return new RTypeInstruction(opcode, rd, funct3, rs1, rs2, funct7);
     }
+    
+    private static void parseAndPrintInstruction(int instruction) {
+
+        // Extract opcode (bits 0-6)
+        int opcode = (instruction >> 26) & 0x7F;
+
+        // Extract rd (bits 7-11)
+        int rd = (instruction >> 20) & 0x1F;
+
+        // Extract funct3 (bits 12-14)
+        int funct3 = (instruction >> 12) & 0x7;
+
+        // Extract funct7 (bits 15-20) for R-type instructions or imm[11:0] for I-type instructions
+        int funct7 = (instruction >> 15) & 0x7F;
+
+        // Extract rs1 (bits 15-19)
+        int rs1 = (instruction >> 15) & 0x1F;
+
+        // Extract rs2 (bits 20-24)
+        int rs2 = (instruction >> 20) & 0x1F;
+
+        // Extract immediate value (imm[11:0]) for I-type instructions
+        int imm = instruction & 0xFFFFF;
+
+        // Print extracted information
+        System.out.println("Opcode: " + opcode);
+        System.out.println("rd: " + rd);
+        System.out.println("funct3: " + funct3);
+        System.out.println("funct7: " + funct7);
+        System.out.println("rs1: " + rs1);
+        System.out.println("rs2: " + rs2);
+        System.out.println("imm: " + imm);
+    }
+    
 }
