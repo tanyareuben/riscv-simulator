@@ -37,58 +37,73 @@ public class InstructionFactory {
                 return createRTypeInstruction(binaryInstruction);
 
             default:
-                throw new UnsupportedOperationException("Unsupported opcode: " + InstructionSet.getMnemonic(opcode));
+                throw new UnsupportedOperationException("Unsupported opcode: " + opcode);
         }
     }
 
     private static int parseOpcode(int instruction) {
-        return instruction & 0x7F;
+        //return instruction & 0x7F;
+    	return (instruction >> 0) & 0x7F; // Extract opcode
     }
 
     private static Instruction createUTypeInstruction(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
-        int rd = (binaryInstruction >> 7) & 0x1F;
-        int immediate = binaryInstruction & 0xFFFFF000;
+        
+		int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
 
-        return new UTypeInstruction(opcode, rd, immediate);
+
+        return new UTypeInstruction(opcode, rd, imm);
     }
 
     private static Instruction createJTypeInstruction(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
-        int rd = (binaryInstruction >> 7) & 0x1F;
-        int immediate = ((binaryInstruction >> 12) & 0xFF800) | ((binaryInstruction >> 11) & 0x1000) | (binaryInstruction & 0xFF);
+		int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
 
-        return new JTypeInstruction(opcode, rd, immediate);
+        return new JTypeInstruction(opcode, rd, imm);
     }
 
     private static Instruction createITypeInstruction(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
-        int rd = (binaryInstruction >> 7) & 0x1F;
-        int funct3 = (binaryInstruction >> 12) & 0x7;
-        int rs1 = (binaryInstruction >> 15) & 0x1F;
-        int rs2 = (binaryInstruction >> 20) & 0x1F;
-        int immediate = (int) (binaryInstruction >> 20);
+		int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
 
-        return new ITypeInstruction(opcode, rd, funct3, rs1, rs2, immediate);
+        return new ITypeInstruction(opcode, rd, funct3, rs1, rs2, imm);
     }
 
     private static Instruction createSTypeInstruction(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
-        int funct3 = (binaryInstruction >> 12) & 0x7;
-        int rs1 = (binaryInstruction >> 15) & 0x1F;
-        int rs2 = (binaryInstruction >> 20) & 0x1F;
-        int immediate = ((binaryInstruction >> 7) & 0x1F) | ((binaryInstruction >> 25) & 0xFE0);
+		int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
 
-        return new STypeInstruction(opcode, funct3, rs1, rs2, immediate);
+        return new STypeInstruction(opcode, funct3, rs1, rs2, imm);
     }
 
     private static Instruction createRTypeInstruction(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
-        int rd = (binaryInstruction >> 7) & 0x1F;
-        int funct3 = (binaryInstruction >> 12) & 0x7;
-        int rs1 = (binaryInstruction >> 15) & 0x1F;
-        int rs2 = (binaryInstruction >> 20) & 0x1F;
-        int funct7 = (binaryInstruction >> 25) & 0x7F;
+		int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
 
         return new RTypeInstruction(opcode, rd, funct3, rs1, rs2, funct7);
     }
