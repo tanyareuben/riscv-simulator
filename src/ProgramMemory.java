@@ -25,15 +25,16 @@ public class ProgramMemory extends Memory {
             String line;
             int address = getStartAddress();
             while ((line = reader.readLine()) != null) {
-                int instruction = Integer.parseInt(line, 16);
-                writeWord(address, instruction);
-                address += 4;
+                byte instructionByte = (byte) Integer.parseInt(line, 16);
+                writeByte(address, instructionByte);
+                address++;
             }
             System.out.println("Program loading complete.");
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error loading program: " + e.getMessage());
         }
     }
+
 
     @Override
     public int getEndAddress() {
