@@ -96,12 +96,28 @@ public class Memory {
         return getStartAddress() + getSize() - 1;
     }
 
+//    public void printMemory() {
+//        int currentAddress = getStartAddress();
+//        while (currentAddress < getEndAddress()) {
+//            int data = readWord(currentAddress);
+//            System.out.printf("0x%08X : 0x%08X\n", currentAddress, data);
+//            currentAddress += 4;
+//        }
+//    }
+    
     public void printMemory() {
         int currentAddress = getStartAddress();
         while (currentAddress < getEndAddress()) {
-            int data = readWord(currentAddress);
-            System.out.printf("0x%08X : 0x%08X\n", currentAddress, data);
+            int word = readWord(currentAddress);
+            System.out.printf("0x%08X :\n", currentAddress);
+
+            for (int i = 3; i >= 0; i--) {
+                int byteValue = (word >> (i * 8)) & 0xFF;
+                System.out.printf("    Byte %d: 0x%02X\n", i, byteValue);
+            }
+
             currentAddress += 4;
         }
     }
+
 }
