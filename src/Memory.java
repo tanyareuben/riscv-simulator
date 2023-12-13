@@ -22,8 +22,8 @@ public class Memory {
     }
 
     private void initializeMemory() {
-        for (int i = startAddress; i < startAddress + size; i += 4) {
-            data.put(i, 0);  // Assuming the initial value at each address is 0
+        for (int i = startAddress; i < startAddress + size; i++) {
+            data.put(i, (byte) 0);  // Assuming the initial value at each address is 0
         }
     }
 
