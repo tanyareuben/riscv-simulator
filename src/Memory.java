@@ -4,7 +4,7 @@ import java.util.Map;
 public class Memory {
     private final int startAddress;
     private final int size;
-    private Map<Integer, Integer> data;
+    private Map<Integer, Byte> data;
 
     public Memory(int startAddress, int size) {
         this.startAddress = startAddress;
@@ -13,7 +13,6 @@ public class Memory {
 
         initializeMemory();
     }
-
     public int getStartAddress() {
         return startAddress;
     }
@@ -34,21 +33,19 @@ public class Memory {
         }
     }
 
-    public int readByte(int address) {
+    public byte readByte(int address) {
+        checkAddressValidity(address);
+        return data.getOrDefault(address, (byte) 0);
+    }
+
+    public short readHalfword(int address) {
         checkAddressValidity(address);
         int word = readWord(address & 0xFFFFFFFC);
         int offset = (address % 4) * 8;
-        return (word >> offset) & 0xFF;
+        return (short) ((word >> offset) & 0xFFFF);
     }
 
-    public int readHalfword(int address) {
-        checkAddressValidity(address);
-        int word = readWord(address & 0xFFFFFFFC);
-        int offset = (address % 4) * 8;
-        return (word >> offset) & 0xFFFF;
-    }
-
-    public int readShort(int address) {
+    public short readShort(int address) {
         checkAddressValidity(address);
         int word = readWord(address & 0xFFFFFFFC);
         int offset = (address % 4) * 8;
@@ -57,19 +54,18 @@ public class Memory {
 
     public int readWord(int address) {
         checkAddressValidity(address);
-        return data.getOrDefault(address, 0);
+        return (data.getOrDefault(address, (byte) 0) & 0xFF) |
+               ((data.getOrDefault(address + 1, (byte) 0) & 0xFF) << 8) |
+               ((data.getOrDefault(address + 2, (byte) 0) & 0xFF) << 16) |
+               ((data.getOrDefault(address + 3, (byte) 0) & 0xFF) << 24);
     }
 
-    public void writeByte(int address, int value) {
+    public void writeByte(int address, byte value) {
         checkAddressValidity(address);
-        int word = readWord(address & 0xFFFFFFFC);
-        int offset = (address % 4) * 8;
-        word &= ~(0xFF << offset);
-        word |= (value & 0xFF) << offset;
-        writeWord(address & 0xFFFFFFFC, word);
+        data.put(address, value);
     }
 
-    public void writeHalfword(int address, int value) {
+    public void writeHalfword(int address, short value) {
         checkAddressValidity(address);
         int word = readWord(address & 0xFFFFFFFC);
         int offset = (address % 4) * 8;
@@ -77,8 +73,8 @@ public class Memory {
         word |= (value & 0xFFFF) << offset;
         writeWord(address & 0xFFFFFFFC, word);
     }
-
-    public void writeShort(int address, int value) {
+    
+    public void writeShort(int address, short value) {
         checkAddressValidity(address);
         int word = readWord(address & 0xFFFFFFFC);
         int offset = (address % 4) * 8;
@@ -89,8 +85,14 @@ public class Memory {
 
     public void writeWord(int address, int value) {
         checkAddressValidity(address);
-        data.put(address, value);
+
+        for (int i = 0; i < 4; i++) {
+            int byteValue = (value >> (i * 8)) & 0xFF;
+            data.put(address + i, (byte) byteValue);
+        }
     }
+
+
 
     public int getEndAddress() {
         return getStartAddress() + getSize() - 1;

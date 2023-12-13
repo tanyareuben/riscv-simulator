@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class ProgramMemory extends Memory {
 
-
     public ProgramMemory(int startAddress, int size) {
         super(startAddress, size);
     }
@@ -47,6 +46,26 @@ public class ProgramMemory extends Memory {
             int instruction = readWord(currentAddress);
             System.out.printf("0x%08X : 0x%08X\n", currentAddress, instruction);
             currentAddress += 4;
+        }
+    }
+
+    // Override readWord and writeWord methods to use Byte values
+
+    @Override
+    public int readWord(int address) {
+        checkAddressValidity(address);
+        int word = 0;
+        for (int i = 0; i < 4; i++) {
+            word |= (readByte(address + i) & 0xFF) << (i * 8);
+        }
+        return word;
+    }
+
+    @Override
+    public void writeWord(int address, int value) {
+        checkAddressValidity(address);
+        for (int i = 0; i < 4; i++) {
+            writeByte(address + i, (byte) ((value >> (i * 8)) & 0xFF));
         }
     }
 }
