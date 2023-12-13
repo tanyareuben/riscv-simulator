@@ -26,12 +26,9 @@ public class ProgramMemory extends Memory {
             int address = getStartAddress();
 
             while ((line = reader.readLine()) != null) {
-                for (int i = 0; i < line.length(); i += 2) {
-                    String byteHex = line.substring(i, i + 2);
-                    int instructionByte = Integer.parseInt(byteHex, 16);
-                    writeByte(address, instructionByte);
-                    address++;
-                }
+                int instructionByte = Integer.parseInt(line, 2);
+                writeByte(address, instructionByte);
+                address++;
             }
 
             System.out.println("Program loading complete.");
@@ -45,12 +42,29 @@ public class ProgramMemory extends Memory {
         return getStartAddress() + getSize() - 1;
     }
 
+//    public void printMemory() {
+//        int currentAddress = getStartAddress();
+//        while (currentAddress < getEndAddress()) {
+//            int instruction = readWord(currentAddress);
+//            System.out.printf("0x%08X : 0x%08X\n", currentAddress, instruction);
+//            currentAddress += 4;
+//        }
+//    }
+    
     public void printMemory() {
         int currentAddress = getStartAddress();
         while (currentAddress < getEndAddress()) {
-            int instruction = readWord(currentAddress);
-            System.out.printf("0x%08X : 0x%08X\n", currentAddress, instruction);
+            int word = readWord(currentAddress);
+            System.out.printf("0x%08X :\n", currentAddress);
+
+            for (int i = 3; i >= 0; i--) {
+                int byteValue = (word >> (i * 8)) & 0xFF;
+                String binaryString = String.format("%8s", Integer.toBinaryString(byteValue)).replace(' ', '0');
+                System.out.printf("    Byte %d: %s\n", i, binaryString);
+            }
+
             currentAddress += 4;
         }
     }
+    
 }

@@ -1,7 +1,31 @@
 public class InstructionFactory {
     public static Instruction create(int binaryInstruction) {
-        int opcode = parseOpcode(binaryInstruction);
+//        int opcode = parseOpcode(binaryInstruction);
 
+        int opcode = (binaryInstruction >> 0) & 0x7F; // Extract opcode
+        int rd = (binaryInstruction >> 7) & 0x1F; // Extract destination register
+        int funct3 = (binaryInstruction >> 12) & 0x07; // Extract function code 3
+        int funct7 = (binaryInstruction >> 25) & 0x7F; // Extract function code 7
+        int rs1 = (binaryInstruction >> 15) & 0x1F; // Extract source register 1
+        int rs2 = (binaryInstruction >> 20) & 0x1F; // Extract source register 2
+        int imm = ((binaryInstruction >> 20) & 0xFFF) | ((binaryInstruction & 0x80000000) >> 11); // Extract immediate value
+		
+        String binaryString = String.format("%32s", Integer.toBinaryString(binaryInstruction)).replace(' ', '0');
+
+        int opcodex = Integer.parseInt(binaryString.substring(0, 7), 2);
+        int rdx = Integer.parseInt(binaryString.substring(7, 12), 2);
+        int funct3x = Integer.parseInt(binaryString.substring(12, 15), 2);
+        int rs1x = Integer.parseInt(binaryString.substring(15, 20), 2);
+        int rs2x = Integer.parseInt(binaryString.substring(20, 25), 2);
+        int funct7x = Integer.parseInt(binaryString.substring(25, 32), 2);
+
+        // Calculate the immediate value with sign extension
+        String immStr = binaryString.substring(20);
+        int immx = Integer.parseInt(immStr, 2);
+        if ((immx & 0x800) != 0) {
+            immx |= 0xFFFFF000;
+        }
+        
         switch (opcode) {
             case InstructionSet.LUI:
             case InstructionSet.AUIPC:

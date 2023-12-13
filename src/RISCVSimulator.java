@@ -48,6 +48,7 @@ public class RISCVSimulator {
         System.out.println("'insn' - Print the assembly of the next instruction");
         System.out.println("'b' - Set a breakpoint at a specified PC address");
         System.out.println("'c' - Continue execution until the next breakpoint or exit");
+        System.out.println("'p' - Print program memory");
         System.out.println("'q' - Quit the simulator");
         System.out.print("Enter your choice: ");
     }
@@ -79,6 +80,9 @@ public class RISCVSimulator {
             case "c":
                 continueExecution();
                 break;
+            case "p":
+                printProgramMemory();
+                break;
             case "q":
                 handleQuit();
                 break;
@@ -88,7 +92,11 @@ public class RISCVSimulator {
         }
     }
     
-    private void handleQuit() {
+    private void printProgramMemory() {
+    	program.printProgramMemory();
+	}
+
+	private void handleQuit() {
         System.out.println("Exiting the simulator. Goodbye!");
         System.exit(0);
     }
