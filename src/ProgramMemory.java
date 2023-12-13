@@ -24,11 +24,16 @@ public class ProgramMemory extends Memory {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int address = getStartAddress();
+
             while ((line = reader.readLine()) != null) {
-                byte instructionByte = (byte) Integer.parseInt(line, 16);
-                writeByte(address, instructionByte);
-                address++;
+                for (int i = line.length() - 2; i >= 0; i -= 2) {
+                    String byteHex = line.substring(i, i + 2);
+                    int instructionByte = Integer.parseInt(byteHex, 16);
+                    writeByte(address, (byte) instructionByte); // Convert to byte
+                    address++;
+                }
             }
+
             System.out.println("Program loading complete.");
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error loading program: " + e.getMessage());
