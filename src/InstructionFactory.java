@@ -33,12 +33,11 @@ public class InstructionFactory {
                 return createSTypeInstruction(binaryInstruction);
 
             case InstructionSet.ADD:
-//            FIXME
-//            case InstructionSet.SUB:
+            case InstructionSet.SUB:
                 return createRTypeInstruction(binaryInstruction);
 
             default:
-                throw new UnsupportedOperationException("Unsupported opcode: " + opcode);
+                throw new UnsupportedOperationException("Unsupported opcode: " + InstructionSet.getMnemonic(opcode));
         }
     }
 
