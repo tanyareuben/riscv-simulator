@@ -5,7 +5,7 @@ public class ITypeInstruction extends Instruction {
     private int rs1;
     private int immediate;
 
-    public ITypeInstruction(int opcode, int rd, int funct3, int rs1, int immediate) {
+    public ITypeInstruction(int opcode, int rd, int funct3, int rs1, int rs2, int immediate) {
         this.opcode = opcode;
         this.rd = rd;
         this.funct3 = funct3;
