@@ -105,6 +105,7 @@ public class Memory {
 //        }
 //    }
     
+    
     public void printMemory() {
         int currentAddress = getStartAddress();
         while (currentAddress < getEndAddress()) {
