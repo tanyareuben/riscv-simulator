@@ -67,9 +67,10 @@ public class InstructionFactory {
         int rd = (binaryInstruction >> 7) & 0x1F;
         int funct3 = (binaryInstruction >> 12) & 0x7;
         int rs1 = (binaryInstruction >> 15) & 0x1F;
+        int rs2 = (binaryInstruction >> 20) & 0x1F;
         int immediate = (int) (binaryInstruction >> 20);
 
-        return new ITypeInstruction(opcode, rd, funct3, rs1, immediate);
+        return new ITypeInstruction(opcode, rd, funct3, rs1, rs2, immediate);
     }
 
     private static Instruction createSTypeInstruction(int binaryInstruction) {

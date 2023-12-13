@@ -3,6 +3,7 @@ public class ITypeInstruction extends Instruction {
     private int rd;
     private int funct3;
     private int rs1;
+    private int rs2;
     private int immediate;
 
     public ITypeInstruction(int opcode, int rd, int funct3, int rs1, int rs2, int immediate) {
@@ -10,6 +11,7 @@ public class ITypeInstruction extends Instruction {
         this.rd = rd;
         this.funct3 = funct3;
         this.rs1 = rs1;
+        this.rs2 = rs2;
         this.immediate = immediate;
     }
 
@@ -116,8 +118,36 @@ public class ITypeInstruction extends Instruction {
                 registers.writeToRegister(rd, result_SRAI);
                 break;
                 
-            
+            case InstructionSet.BEQ: //branch if equal
+				if(registers.readFromRegister(rs1) == registers.readFromRegister(rs2)) {
+					programCounter += immediate; 
+				} 
+				break; 
+				
+            case InstructionSet.BNE: //branch if not equal
+				if(registers.readFromRegister(rs1) != registers.readFromRegister(rs2)) {
+					programCounter += immediate; 
+				}
+				break; 
+				
+            case InstructionSet.BLT: //branch if less than
+				if(registers.readFromRegister(rs1) < registers.readFromRegister(rs2)) {
+					programCounter += immediate; 
+				}
+				break;
                 
+            case InstructionSet.BGE:  //branch if greater than or equal to 
+				if(registers.readFromRegister(rs1) >= registers.readFromRegister(rs2)) {
+					programCounter += immediate; 
+				}
+				break; 
+				
+            case InstructionSet.BLTU:  //Branch if less than (unsigned) 
+				if (Integer.compareUnsigned(registers.readFromRegister(rs1), registers.readFromRegister(rs2)) < 0) {
+					programCounter += immediate; 
+				}
+				break; 
+
             
                 
             
