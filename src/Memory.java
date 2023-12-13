@@ -23,13 +23,13 @@ public class Memory {
     }
 
     private void initializeMemory() {
-        for (int i = startAddress; i < startAddress + size; i += 4) {
+        for (int i = startAddress; i < startAddress + size; i++) {
             data.put(i, 0);  // Assuming the initial value at each address is 0
         }
     }
 
     public void checkAddressValidity(int address) {
-        if (address < startAddress || address >= startAddress + size || address % 4 != 0) {
+        if (address < startAddress || address >= startAddress + size) {
             throw new IllegalArgumentException("Invalid memory address: " + address);
         }
     }
