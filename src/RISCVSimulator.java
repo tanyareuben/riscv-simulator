@@ -11,9 +11,7 @@ public class RISCVSimulator {
 
     Registers registers;
 
-    private boolean isRunning;
     private boolean isDone;
-    private boolean isBreakpointHit;
     private Scanner scanner;
 
     public RISCVSimulator() {

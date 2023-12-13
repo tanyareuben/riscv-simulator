@@ -19,60 +19,60 @@ public class RTypeInstruction extends Instruction {
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
 	        case InstructionSet.ADD:
-		        int resultADD = registers.getRegister(rs1) + registers.getRegister(rs2);
+		        int resultADD = registers.readFromRegister(rs1) + registers.readFromRegister(rs2);
 		        registers.writeToRegister(rd, resultADD);
 		        break;
 		        
 	        case InstructionSet.SUB:
-	            int resultSUB = registers.getRegister(rs1) - registers.getRegister(rs2);
+	            int resultSUB = registers.readFromRegister(rs1) - registers.readFromRegister(rs2);
 	            registers.writeToRegister(rd, resultSUB);
 	            break;
 
 	        case InstructionSet.SLL:
-	            int shiftAmount = registers.getRegister(rs2) & 0x1F; // Extract lower 5 bits
-	            int resultSLL = registers.getRegister(rs1) << shiftAmount;
+	            int shiftAmount = registers.readFromRegister(rs2) & 0x1F; // Extract lower 5 bits
+	            int resultSLL = registers.readFromRegister(rs1) << shiftAmount;
 	            registers.writeToRegister(rd, resultSLL);
 	            break;
 	            
 	        case InstructionSet.SLT:
-	            int resultSLT = (registers.getRegister(rs1) < registers.getRegister(rs2)) ? 1 : 0;
+	            int resultSLT = (registers.readFromRegister(rs1) < registers.readFromRegister(rs2)) ? 1 : 0;
 	            registers.writeToRegister(rd, resultSLT);
 	            break;
 	            
 	        case InstructionSet.SLTU:
-	            int resultSLTU = (Integer.compareUnsigned(registers.getRegister(rs1), registers.getRegister(rs2)) < 0) ? 1 : 0;
+	            int resultSLTU = (Integer.compareUnsigned(registers.readFromRegister(rs1), registers.readFromRegister(rs2)) < 0) ? 1 : 0;
 	            registers.writeToRegister(rd, resultSLTU);
 	            break;
 	            
 	        case InstructionSet.XOR:
-	            int resultXOR = registers.getRegister(rs1) ^ registers.getRegister(rs2);
+	            int resultXOR = registers.readFromRegister(rs1) ^ registers.readFromRegister(rs2);
 	            registers.writeToRegister(rd, resultXOR);
 	            break;
 	            
 	        case InstructionSet.SRL:
-	            int shiftValue = (registers.getRegister(rs2) & 0x1F); // Extract the shift amount
-	            int sourceValue = registers.getRegister(rs1); // Value to be shifted
+	            int shiftValue = (registers.readFromRegister(rs2) & 0x1F); // Extract the shift amount
+	            int sourceValue = registers.readFromRegister(rs1); // Value to be shifted
 	            int shiftedResult = sourceValue >>> shiftValue; // Perform logical right shift
 	            registers.writeToRegister(rd, shiftedResult); // Store the result in the destination register
 	            break;
 	            
             case InstructionSet.SRA:
-                int sraShiftValue = (registers.getRegister(rs2) & 0x1F); // Extract the shift amount
-                int sraSourceValue = registers.getRegister(rs1); // Value to be shifted
+                int sraShiftValue = (registers.readFromRegister(rs2) & 0x1F); // Extract the shift amount
+                int sraSourceValue = registers.readFromRegister(rs1); // Value to be shifted
                 int sraResult = sraSourceValue >> sraShiftValue; // Perform arithmetic right shift
                 registers.writeToRegister(rd, sraResult); // Store the result in the destination register
                 break;
                 
 	        case InstructionSet.OR:
-	            int orFirstValue = registers.getRegister(rs1); // First value for bitwise OR
-	            int orSecondValue = registers.getRegister(rs2); // Second value for bitwise OR
+	            int orFirstValue = registers.readFromRegister(rs1); // First value for bitwise OR
+	            int orSecondValue = registers.readFromRegister(rs2); // Second value for bitwise OR
 	            int orResult = orFirstValue | orSecondValue; // Perform bitwise OR operation
 	            registers.writeToRegister(rd, orResult); // Store the result in the destination register
 	            break;
 	            
 	        case InstructionSet.AND:
-	            int andFirstValue = registers.getRegister(rs1); // First value for bitwise AND
-	            int andSecondValue = registers.getRegister(rs2); // Second value for bitwise AND
+	            int andFirstValue = registers.readFromRegister(rs1); // First value for bitwise AND
+	            int andSecondValue = registers.readFromRegister(rs2); // Second value for bitwise AND
 	            int andResult = andFirstValue & andSecondValue; // Perform bitwise AND operation
 	            registers.writeToRegister(rd, andResult); // Store the result in the destination register
 	            break;

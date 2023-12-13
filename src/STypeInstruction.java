@@ -18,20 +18,20 @@ public class STypeInstruction extends Instruction {
     public void execute(Memory dataMemory, Registers registers, int programCounter) {
         switch (opcode) {
 	        case InstructionSet.SW: // Store word
-	            int swAddress = registers.getRegister(rs1) + immediate; 
-	            int swValue = registers.getRegister(rs2); 
+	            int swAddress = registers.readFromRegister(rs1) + immediate; 
+	            int swValue = registers.readFromRegister(rs2); 
 	            dataMemory.writeWord(swAddress, swValue); 
 	            break;
                 
             case InstructionSet.SB: // Store byte
-                int sbAddress = registers.getRegister(rs1) + immediate; 
-                byte sbValue = (byte) (registers.getRegister(rs2) & 0xFF); 
+                int sbAddress = registers.readFromRegister(rs1) + immediate; 
+                byte sbValue = (byte) (registers.readFromRegister(rs2) & 0xFF); 
                 dataMemory.writeByte(sbAddress, sbValue); 
                 break;
                 
             case InstructionSet.SH: // Store halfword
-                int shAddress = registers.getRegister(rs1) + immediate; 
-                short shValue = (short) (registers.getRegister(rs2) & 0xFFFF); 
+                int shAddress = registers.readFromRegister(rs1) + immediate; 
+                short shValue = (short) (registers.readFromRegister(rs2) & 0xFFFF); 
                 dataMemory.writeHalfword(shAddress, shValue);
                 break;
                 
