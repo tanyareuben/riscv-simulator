@@ -14,8 +14,11 @@ public class Program {
 
     private Set<Integer> breakpoints = new HashSet<>();
 
+    private int programSize = 0; //Actual Program Size in words
+    private int currentExecutingLine = 0;
     //program state
     private boolean isDone = false;
+    
     
     public Program(int instructionsStartAddress, int maxProgramSize, int dataStartAddress, int maxDataSize, Registers registers) {
         programMemory = new ProgramMemory(instructionsStartAddress, maxProgramSize);
@@ -42,7 +45,7 @@ public class Program {
     }
 
     public void setBreakpoint(int address) {
-        if (address >= programMemory.getStartAddress() && address < programMemory.getEndAddress()) {
+        if (address >= programMemory.getStartAddress() && address < programSize) {
             if (breakpoints.size() < 5) {
                 breakpoints.add(address);
                 System.out.println("Breakpoint set at address " + Integer.toHexString(address));
@@ -60,7 +63,7 @@ public class Program {
     }
 
     public void loadProgramFromFile(String filePath) {
-        programMemory.loadInstructionsFromFile(filePath);
+    	programSize = programMemory.loadInstructionsFromFile(filePath);
     }
 
     public void printRegisters() {
@@ -77,6 +80,7 @@ public class Program {
     }
 
     public void executeNextInstruction() {
+
         int instruction = programMemory.getInstructionAt(programCounter);
         Instruction parsedInstruction = InstructionFactory.create(instruction);
 
@@ -87,6 +91,8 @@ public class Program {
 
         parsedInstruction.execute(dataMemory, registers, programCounter);
         programCounter += 4; // Increment program counter after successful execution
+        currentExecutingLine++;
+    	
     }
 
     public void printProgramMemory() {
@@ -103,7 +109,7 @@ public class Program {
         while (!isDone) {
             executeNextInstruction();
 
-            if (programCounter >= programMemory.getEndAddress()) {
+            if (programCounter >= programMemory.getEndAddress() || currentExecutingLine >= programSize) {
                 isDone = true;
                 break;
             }

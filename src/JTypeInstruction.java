@@ -17,8 +17,6 @@ public class JTypeInstruction extends Instruction {
             	programCounter += immediate; 
 				break; 
 
-            // Add cases for other J-Type instructions as needed
-
             default:
                 throw new UnsupportedOperationException("Unsupported J-Type opcode: " + opcode);
         }

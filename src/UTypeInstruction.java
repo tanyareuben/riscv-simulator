@@ -24,8 +24,6 @@ public class UTypeInstruction extends Instruction {
 	            registers.writeToRegister(rd, auipcRes); // Write the result to the specified destination register
 	            break;
 
-            // Add cases for other U-Type instructions as needed
-
             default:
                 throw new UnsupportedOperationException("Unsupported U-Type opcode: " + opcode);
         }
@@ -44,7 +42,20 @@ public class UTypeInstruction extends Instruction {
 
     @Override
     public String getMnemonic() {
-        // Replace 0x17 with the actual opcode for U-type instructions
-        return InstructionSet.getMnemonic(0x17);
+    	
+    	String mnemonic;
+    	switch (opcode) {
+	        case InstructionSet.LUI: // Load Upper Immediate
+	        	mnemonic = "LUI";
+	            break;
+	
+	        case InstructionSet.AUIPC: // Add Upper Immediate to PC
+	        	mnemonic = "AUIPC";
+	            break;
+	
+	        default:
+	            throw new UnsupportedOperationException("Unsupported U-Type opcode: " + opcode);
+	    }
+    	return mnemonic;
     }
 }

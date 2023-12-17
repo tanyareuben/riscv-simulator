@@ -39,6 +39,8 @@ public class RISCVSimulator {
     }
 
     private void displayMenu() {
+        System.out.println();
+        System.out.println();
         System.out.println("RISC-V Simulator Menu:");
         System.out.println("'r' - Run the entire program");
         System.out.println("'s' - Run the next instruction and stop");
@@ -50,6 +52,7 @@ public class RISCVSimulator {
         System.out.println("'c' - Continue execution until the next breakpoint or exit");
         System.out.println("'p' - Print program memory");
         System.out.println("'q' - Quit the simulator");
+        System.out.println();
         System.out.print("Enter your choice: ");
     }
 

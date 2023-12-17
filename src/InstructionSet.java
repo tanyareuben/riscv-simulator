@@ -40,9 +40,10 @@ public class InstructionSet {
 	public static final int SLLI = 0x13 | (0x1 << 12);
 	public static final int SRLI = 0x13 | (0x5 << 12);
 	public static final int SRAI = 0x13 | (0x17 << 12);
+	
+//R Type Instructions	
 	public static final int ADD = 0x33 | (0x0 << 12);
 	public static final int SUB = 0x33 | (0x400000 >> 12); // funct7 = 0x400000
-//	public static final int SUB = 0x33 | (0x20 << 25);
 	public static final int SLL = 0x33 | (0x1 << 12);
 	public static final int SLT = 0x33 | (0x2 << 12);
 	public static final int SLTU = 0x33 | (0x3 << 12);
@@ -58,11 +59,16 @@ public class InstructionSet {
 
 	static {
         // Initialize opcodeToMnemonicMap and mnemonicToOpcodeMap with R-type instructions
-        addMapping(LUI, "LUI");
+        
+		//U- TYpe Instruction
+		addMapping(LUI, "LUI");
         addMapping(AUIPC, "AUIPC");
+        
+        
+        //J - TYpe Instruction
         addMapping(JAL, "JAL");
-        addMapping(JALR, "JALR");
 
+        //B-Type Instructions
         addMapping(BEQ, "BEQ");
         addMapping(BNE, "BNE");
         addMapping(BLT, "BLT");
@@ -70,6 +76,8 @@ public class InstructionSet {
         addMapping(BLTU, "BLTU");
         addMapping(BGEU, "BGEU");
 
+        // I - Type Instructions
+        addMapping(JALR, "JALR");
         addMapping(LB, "LB");
         addMapping(LH, "LH");
         addMapping(LW, "LW");
@@ -90,6 +98,9 @@ public class InstructionSet {
         addMapping(SLLI,"SLLI");
         addMapping(SRLI,"SRLI");
         addMapping(SRAI,"SRAI");
+        
+        
+        //R-Type Instructions
         addMapping(ADD,"ADD");
         addMapping(SUB,"SUB");
         addMapping(SLL,"SLL");

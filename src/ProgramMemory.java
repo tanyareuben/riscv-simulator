@@ -20,22 +20,25 @@ public class ProgramMemory extends Memory {
         return readWord(address);
     }
 
-    public void loadInstructionsFromFile(String filePath) {
+    //return the size of the Program
+    public int loadInstructionsFromFile(String filePath) {
+        String line;
+        int address = getStartAddress();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            int address = getStartAddress();
 
             while ((line = reader.readLine()) != null) {
                 int instructionByte = Integer.parseInt(line, 2);
                 writeByte(address, instructionByte);
                 address++;
             }
-
             System.out.println("Program loading complete.");
+
         } catch (IOException | NumberFormatException e) {
             System.err.println("Error loading program: " + e.getMessage());
         }
-    }
+		return (address/4);
+	}
 
     @Override
     public int getEndAddress() {
